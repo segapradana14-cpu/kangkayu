@@ -196,7 +196,7 @@ textarea.in{height:auto;min-height:96px;padding:10px 12px;resize:vertical}
 .sec.alt{background:#fff}
 .big{font-size:32px;font-weight:800;letter-spacing:-.01em;line-height:1.2}
 .g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
-.g4{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px}
+.g4{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:24px}
 .g5{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px}
 .feat{display:flex;flex-direction:column;gap:12px;padding:28px}
 .prod{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
