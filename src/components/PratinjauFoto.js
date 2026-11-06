@@ -23,8 +23,8 @@ export default function PratinjauFoto({ url, nama }) {
         style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', padding: 0, border: 0, background: 'none', cursor: 'zoom-in' }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={url} alt={nama} />
-        <span style={{ position: 'absolute', right: 10, bottom: 10, background: 'rgba(22,32,30,.7)', color: '#fff', fontSize: 12, fontWeight: 600, padding: '4px 10px', borderRadius: 999 }}>Lihat foto</span>
+        <img src={url} alt={nama} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+        <span style={{ position: 'absolute', right: 6, bottom: 6, background: 'rgba(22,32,30,.7)', color: '#fff', fontSize: 11, fontWeight: 600, padding: '3px 8px', borderRadius: 999 }}>Lihat foto</span>
       </button>
 
       {buka && (

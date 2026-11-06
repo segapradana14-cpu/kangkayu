@@ -5,9 +5,11 @@ import Link from 'next/link';
 import { useFormState, useFormStatus } from 'react-dom';
 import { kirimPesanan } from './actions';
 import GaleriFoto from '@/components/GaleriFoto';
+import PratinjauFoto from '@/components/PratinjauFoto';
 import { BAHAN, FINISHING, WARNA, JENIS_LAIN, MAKS_FOTO, MAKS_BYTES } from '@/lib/opsi';
 import { rupiah } from '@/lib/session';
 import { unggahFoto } from '@/lib/unggah';
+import { fotoUrl } from '@/lib/foto';
 
 function Kirim({ onKlik, proses }) {
   const { pending } = useFormStatus();
@@ -117,10 +119,14 @@ export default function FormPesanan({ produk, daftarProduk }) {
             <section className="card col g16" style={{ borderColor: 'var(--pri)', boxShadow: '0 0 0 3px rgba(31,107,87,.10)' }}>
               <div className="row sp"><h2>Produk yang kamu pilih dari katalog</h2><span className="chip c-ok">Dari katalog</span></div>
               <div className="row g16" style={{ alignItems: 'flex-start', flexWrap: 'nowrap' }}>
-                <div className="photo" style={{ width: 120, height: 96, flex: 'none' }}>
-                  <svg className="ic" viewBox="0 0 64 64" style={{ width: 44, height: 44, strokeWidth: 3 }} aria-hidden="true">
-                    <rect x="12" y="8" width="40" height="44" rx="2" /><path d="M32 8v44M27 30v4M37 30v4" />
-                  </svg>
+                <div className="photo" style={{ width: 120, height: 96, flex: 'none', position: 'relative', overflow: 'hidden' }}>
+                  {produk.foto ? (
+                    <PratinjauFoto url={fotoUrl('produk', produk.foto)} nama={produk.nama} />
+                  ) : (
+                    <svg className="ic" viewBox="0 0 64 64" style={{ width: 44, height: 44, strokeWidth: 3 }} aria-hidden="true">
+                      <rect x="12" y="8" width="40" height="44" rx="2" /><path d="M32 8v44M27 30v4M37 30v4" />
+                    </svg>
+                  )}
                 </div>
                 <div className="col g8" style={{ minWidth: 0 }}>
                   <div><span className="t12 mut b">{produk.kategori.toUpperCase()}</span><h3 style={{ margin: '2px 0 0' }}>{produk.nama}</h3></div>
