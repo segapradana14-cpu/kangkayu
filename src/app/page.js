@@ -119,8 +119,8 @@ export default async function Beranda() {
             <Logo />
             <p>Workshop furniture custom. Nama usaha dan logo ini placeholder dan dapat diganti.</p>
           </div>
-          <div className="col g8"><h3 style={{ color: '#fff' }}>Kontak</h3><span>[ALAMAT WORKSHOP]</span><span>[NO. WHATSAPP]</span><span>[EMAIL USAHA]</span></div>
-          <div className="col g8"><h3 style={{ color: '#fff' }}>Jam operasional</h3><span>[HARI DAN JAM BUKA]</span></div>
+          <div className="col g8"><h3 style={{ color: '#fff' }}>Kontak</h3><span>DS. SENGON RT. 06 RW. 01 KEC. NGAMBON KAB.BOJONEGORO</span><span>085175338022</span><span>segapradana14@gmail.com</span></div>
+          <div className="col g8"><h3 style={{ color: '#fff' }}>Jam operasional</h3><span>SETIAP HARI JAM 08.00 - 17.00 WIB</span></div>
         </div>
       </footer>
     </>
