@@ -10,6 +10,7 @@ import FormPenawaran from './FormPenawaran';
 import FormTolak from './FormTolak';
 import TombolKonfirmasi from '@/components/TombolKonfirmasi';
 import { batalkanPesanan } from '../actions';
+import { linkWa } from '@/lib/wa';
 
 export const dynamic = 'force-dynamic';
 
@@ -43,6 +44,8 @@ export default async function DetailAdmin({ params, searchParams }) {
     ? { harga: o.hargaTotal, mode: dpPersen === 50 ? '50' : dpPersen === 30 ? '30' : 'lain', dpLain: String(o.nominalDp), estimasi: o.estimasiHari, catatan: o.catatanAdmin }
     : null;
   const batal = batalkanPesanan.bind(null, o.id);
+  const pesanWa = `Halo Kak ${o.user.nama}, pesanan ${o.kode} (${o.jenis}) dari KangKayu sudah selesai dan siap diantar.${o.user.alamat ? ` Alamat pengantaran: ${o.user.alamat}.` : ''} Mohon konfirmasi kapan Kakak bisa menerima pesanannya. Terima kasih.`;
+  const hrefWa = linkWa(o.user.noHp, pesanWa);
 
   return (
     <main className="page">
@@ -68,6 +71,18 @@ export default async function DetailAdmin({ params, searchParams }) {
         </div>
 
         <aside className="b2">
+          {o.status === 'SIAP_DIANTAR' && (
+            <section className="card col g8">
+              <h2>Hubungi pelanggan</h2>
+              <p className="mut t13">Pesanan sudah siap diantar. Pesan WhatsApp berisi kode pesanan dan alamat sudah disiapkan, tinggal dikirim.</p>
+              {hrefWa ? (
+                <a className="btn pri blk" href={hrefWa} target="_blank" rel="noreferrer">Hubungi via WhatsApp</a>
+              ) : (
+                <div className="alert" role="alert"><span>Nomor HP pelanggan ({o.user.noHp || 'kosong'}) tidak valid untuk WhatsApp.</span></div>
+              )}
+            </section>
+          )}
+
           {o.status === 'MENUNGGU_TINJAUAN' && (
             <>
               <FormPenawaran orderId={o.id} />
