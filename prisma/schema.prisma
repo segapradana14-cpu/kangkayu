@@ -1,0 +1,128 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  PELANGGAN
+}
+
+enum OrderStatus {
+  MENUNGGU_TINJAUAN
+  MENUNGGU_PERSETUJUAN
+  MENUNGGU_DP
+  DALAM_PRODUKSI
+  MENUNGGU_PELUNASAN
+  SIAP_DIANTAR
+  SELESAI
+  DITOLAK
+  DIBATALKAN
+}
+
+enum PaymentType {
+  DP
+  PELUNASAN
+}
+
+enum PaymentStatus {
+  MENUNGGU_VERIFIKASI
+  TERVERIFIKASI
+  DITOLAK
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  nama      String
+  email     String   @unique
+  password  String
+  noHp      String?
+  alamat    String?  @db.Text
+  role      Role     @default(PELANGGAN)
+  createdAt DateTime @default(now())
+
+  orders Order[]
+
+  @@map("users")
+}
+
+model Product {
+  id         Int      @id @default(autoincrement())
+  slug       String   @unique
+  nama       String
+  kategori   String
+  deskripsi  String   @db.Text
+  hargaMulai Int
+  foto       String?
+  aktif      Boolean  @default(true)
+  createdAt  DateTime @default(now())
+
+  orders Order[]
+
+  @@map("products")
+}
+
+model Order {
+  id            Int         @id @default(autoincrement())
+  kode          String      @unique
+  userId        Int
+  productId     Int?
+  jenis         String
+  panjang       Int
+  lebar         Int
+  tinggi        Int
+  bahan         String
+  finishing     String
+  warna         String
+  catatan       String?     @db.Text
+  fotoReferensi String?     @db.Text
+  hargaTotal    Int?
+  nominalDp     Int?
+  estimasiHari  Int?
+  catatanAdmin  String?     @db.Text
+  alasanTolak   String?     @db.Text
+  progres       Int         @default(0)
+  tahapProduksi String?
+  status        OrderStatus @default(MENUNGGU_TINJAUAN)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  user     User             @relation(fields: [userId], references: [id])
+  product  Product?         @relation(fields: [productId], references: [id])
+  payments Payment[]
+  logs     OrderStatusLog[]
+
+  @@map("orders")
+}
+
+model Payment {
+  id        Int           @id @default(autoincrement())
+  orderId   Int
+  jenis     PaymentType
+  nominal   Int
+  buktiBayar String?
+  status    PaymentStatus @default(MENUNGGU_VERIFIKASI)
+  alasanTolak String?
+  createdAt DateTime      @default(now())
+  verifiedAt DateTime?
+
+  order Order @relation(fields: [orderId], references: [id])
+
+  @@map("payments")
+}
+
+model OrderStatusLog {
+  id        Int         @id @default(autoincrement())
+  orderId   Int
+  status    OrderStatus
+  keterangan String?
+  createdAt DateTime    @default(now())
+
+  order Order @relation(fields: [orderId], references: [id])
+
+  @@map("order_status_logs")
+}

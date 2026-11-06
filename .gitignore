@@ -1,0 +1,11 @@
+node_modules
+.next
+.env
+.env.*
+!.env.example
+public/uploads/referensi/*
+!public/uploads/referensi/.gitkeep
+public/uploads/bukti/*
+!public/uploads/bukti/.gitkeep
+public/uploads/produk/*
+!public/uploads/produk/.gitkeep
