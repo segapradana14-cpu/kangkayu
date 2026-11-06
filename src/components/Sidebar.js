@@ -16,9 +16,9 @@ export default function Sidebar({ items, nama, peran, admin }) {
   return (
     <aside className={admin ? 'side adm' : 'side'}>
       {admin ? (
-        <div className="row sp"><Logo /><span className="tag">Admin</span></div>
+        <div className="row sp"><Logo href="/admin/dashboard" /><span className="tag">Admin</span></div>
       ) : (
-        <Logo />
+        <Logo href="/pelanggan/dashboard" />
       )}
       <nav className="nav" aria-label={admin ? 'Menu admin' : 'Menu pelanggan'}>
         {items.map((it, i) =>
